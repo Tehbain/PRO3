@@ -3,6 +3,7 @@ public class BST<E> implements Tree<E> {
     protected int size = 0;
     protected java.util.Comparator<E> c;
 
+
     /**
      * Create a default BST with a natural order comparator
      */
@@ -86,13 +87,11 @@ public class BST<E> implements Tree<E> {
         inorder(root);
     }
     private void inorder(TreeNode<E> node) {
-        if (node.left != null) inorder(node.left);
+        if (node == null) return;
+        inorder(node.left);
         System.out.print(node.element + ", ");
-        if (node.right != null) inorder(node.right);
-
+        inorder(node.right);
     }
-
-
 
     @Override
     /** Postorder traversal from the root */
@@ -104,9 +103,6 @@ public class BST<E> implements Tree<E> {
         if (node.right != null) postorder(node.right);
         System.out.print(node.element + ", ");
     }
-
-
-
     @Override
     /** Preorder traversal and prints from the root */
     public void preorder() {
@@ -212,6 +208,139 @@ public class BST<E> implements Tree<E> {
 //
     //-------------------------------------------------------------------
 
+    public boolean isLeaf(TreeNode<E> node) {
+        if (node.left == null && node.right == null) return true;
+        else return false;
+    }
+    public boolean isInternal(TreeNode<E> node) {
+        return !isLeaf(node);
+    }
 
+    public int height() {
+        int height = 0;
+        if (root == null){
+            return height = -1;
+        } else if (isLeaf(root)) {
+            return height = 0;
+        }
+
+        else {
+            return height(root, height) + 1;
+        }
+    }
+    private int height(TreeNode<E> node, int height) {
+        int leftHeight = 0;
+        int rightHeight = 0;
+        if (node.left != null) {
+            leftHeight++;
+            height(node.left, leftHeight);
+        }
+        if (node.right != null) {
+            rightHeight++;
+            height(node.right, rightHeight);
+        }
+        if (leftHeight > rightHeight) height += leftHeight;
+        else height += rightHeight;
+        return height + 1;
+    }
+
+    public int sum() {
+        return sum(root);
+    }
+
+    private int sum(TreeNode<E> node) {
+        if (node == null) {
+            return 0; // Base case
+        }
+        return (Integer) node.element + sum(node.left) + sum(node.right);
+    }
+//    public int sum(){
+////        if (!(root.element instanceof Number)) {
+////            System.out.println("NEVER SHOULD HAVE COME HERE");
+////            throw new ArithmeticException();
+////        }
+//        int rootSum = (int) root.element;
+//        int sum = 0;
+//
+//        if (root.left != null && root.right != null){
+//            return rootSum + sum(root.left, sum) + sum(root.right, sum);
+//        } else if (root.left != null) {
+//            return rootSum + sum(root.left, sum);
+//        } else if (root.right != null) {
+//            return  rootSum + sum(root.right, sum);
+//        }
+//        else return 0; //root is leaf.
+//    }
+//
+//    private int sum(TreeNode<E> node, int sum) {
+//        if (node.left != null && node.right != null){
+//            sum += (Integer) node.element;
+//            return sum(node.left, sum) + sum(node.right, sum);
+//        } else if (node.left != null) {
+//            sum += (Integer) node.element;
+//            return sum(node.left, sum);
+//        } else if (node.right != null) {
+//            sum += (Integer) node.element;
+//            return sum(node.right, sum);
+//        } else return sum;
+//    }
+
+    public int findMax(){
+        TreeNode<E> current = root; // Start from the root
+
+        Integer biggus = (Integer) root.element;
+        Integer lInt = 0;
+        Integer rInt = 0;
+        if (isLeaf(root)){
+            return biggus;
+        }
+        boolean leftEnd = false;
+        boolean rightEnd = false;
+        while (current != null && !leftEnd && !rightEnd){
+            if (current.left != null)
+                lInt = (Integer) current.left.element;
+            if (current.right != null)
+                rInt = (Integer) current.right.element;
+            if (lInt > biggus && current.left != null) {
+                biggus = lInt;
+                current = current.left;
+                if (current.left == null) leftEnd = true;
+            } else if (rInt > biggus && current.left != null) {
+                biggus = rInt;
+                current = current.right;
+                if (current.right == null) rightEnd = true;
+            }
+        }
+        return biggus;
+    }
+
+    public int findMin() {
+        TreeNode<E> current = root; // Start from the root
+
+        Integer minimus = (Integer) root.element;
+        Integer lInt = 0;
+        Integer rInt = 0;
+        if (isLeaf(root)){
+            return minimus;
+        }
+        boolean leftEnd = false;
+        boolean rightEnd = false;
+        while (current != null && !leftEnd && !rightEnd){
+            if (current.left != null)
+                lInt = (Integer) current.left.element;
+            if (current.right != null)
+                rInt = (Integer) current.right.element;
+            if (lInt < minimus && current.left != null) {
+                minimus = lInt;
+                current = current.left;
+                if (current.left == null) leftEnd = true;
+            } else if (rInt < minimus && current.left != null) {
+                minimus = rInt;
+                current = current.right;
+                if (current.right == null) rightEnd = true;
+            }
+        }
+        return minimus;
+    }
 
 }
