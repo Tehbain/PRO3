@@ -48,16 +48,29 @@ public class BSTApp {
             System.out.println("   Max is: " + biTree.findMax());
             System.out.println("FindMin should return: 45");
             System.out.println("   Min is: " + biTree.findMin());
+            System.out.println();
         }
 
-        BST bullshit = new BST<>(new Character[]{'+','*','/', '3','8','-','3','6','9'});
-        System.out.println("BRUH");
+        //Opgaver fredag den 16. februar
+
+        //opg2
+        BST biTree2 = new BST<>(new Integer[]{60,55,100,45,57,67,107,59,101});
+        System.out.print("BITREE2 IS: "); biTree2.inorder();
         System.out.println();
-        bullshit.preorder();
+        System.out.println("RemoveMin for biTree2 should return 45:");
+        System.out.println("   Actual: " + biTree2.removeMin());
+        System.out.print("      After removal: "); biTree2.inorder();
         System.out.println();
-        bullshit.postorder();
+        System.out.println("RemoveMax for biTree2 should return 107:");
+        System.out.println("   Actual: " + biTree2.removeMax());
+        System.out.print("      After removal: "); biTree2.inorder();
         System.out.println();
-        bullshit.inorder();
+        System.out.println("GreaterThan(55) should return: 57, 59, 60, 67, 100 & 101");
+        System.out.println("   Actual: " + biTree2.greaterThan(new Integer(55)));
+        System.out.println();
+        System.out.println("GreaterThanGPT(55) should return: 57, 59, 60, 67, 100 & 101");
+        System.out.println("   Actual: " + biTree2.greaterThanGPT(new Integer(55)));
+
     }
 
 }

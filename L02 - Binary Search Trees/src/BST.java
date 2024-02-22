@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class BST<E> implements Tree<E> {
     protected TreeNode<E> root;
     protected int size = 0;
@@ -213,7 +215,8 @@ public class BST<E> implements Tree<E> {
         else return false;
     }
     public boolean isInternal(TreeNode<E> node) {
-        return !isLeaf(node);
+        if (node.left != null || node.right != null) return true;
+        else return false;
     }
 
     public int height() {
@@ -314,6 +317,7 @@ public class BST<E> implements Tree<E> {
         return biggus;
     }
 
+
     public int findMin() {
         TreeNode<E> current = root; // Start from the root
 
@@ -341,6 +345,150 @@ public class BST<E> implements Tree<E> {
             }
         }
         return minimus;
+    }
+
+    /**
+     Metoden skal fjerne og returnere det mindste element i søgetræet.
+     Metoden må ikke gå igennem træet flere gange, og må derfor ikke kalde den
+     eksisterende delete metode.
+     */
+    public E removeMin(){
+        E toReturn = null;
+
+        //Special case: root har ingen venstre børn
+        if (root.left == null && root != null) {
+            toReturn = root.element;
+            if (root.right != null) {
+                root = root.right;
+            }
+            return toReturn;
+        }
+
+        else /*(root.left != null)*/ {
+            return removeMin(root, null);
+        }
+    }
+
+    private E removeMin(TreeNode<E> node, TreeNode parent) {
+
+        //node har venstre børn - vi leder videre langs venstresiden.
+        if (node.left != null) {
+            return removeMin(node.left, node);
+        }
+
+        //node er blad - vi sletter node og returnerer E
+        if (node.left == null && node.right == null) {
+            E toReturn = node.element;
+            parent.left = null;
+            node = null;
+            return toReturn;
+        }
+
+        //node har ikke venstre børn, men har højre børn - vi sletter node, lapper mellem parent.right og node.right, og returnerer E.
+        else /*(node.left == null && node.right != null)*/ {
+            E toReturn = node.element;
+            parent.left = node.right;
+            node = null;
+            return toReturn;
+        }
+    }
+
+    public E removeMax() {
+        E toReturn = null;
+        if (root.right == null && root != null) {
+            toReturn = root.element;
+            if (root.left != null) {
+                root = root.left;
+            }
+            return toReturn;
+        } else{
+            return removeMax(root, null);
+        }
+    }
+
+    private E removeMax(TreeNode<E> node, TreeNode parent) {
+        if (node.right != null) {
+            return removeMax(node.right, node);
+        }
+        if (node.right == null && node.left == null) {
+            E toReturn = node.element;
+            parent.right = null;
+            node = null;
+            return toReturn;
+        }
+        else {
+            E toReturn = node.element;
+            parent.right = node.left;
+            node = null;
+            return toReturn;
+        }
+    }
+
+    /**
+    greaterThan(E element): ArrayList<E> – metoden skal returnere alle de
+    elementer i træet der er større end element.
+     */
+    public ArrayList<E> greaterThan(E e) {
+        ArrayList<E> biggus = new ArrayList<>();
+
+        //Special case: root har ingen højre børn og root.element er ikke større end e - vi returnerer en tom liste.
+        if (root != null && root.right == null) {
+            if(c.compare(root.element, e) <= 0) {
+                return biggus;
+            }
+            biggus.add(root.element);
+            return biggus;
+        }
+        // venstre barn er større end e
+        if (root.left != null && c.compare(root.left.element,e) > 0){
+            biggus.add(root.element);
+            greaterThan(root.left, e, biggus);
+        }
+        // højre barn er større end e
+        if (root.right != null && c.compare(root.right.element,e) > 0){
+            greaterThan(root.right,e,biggus);
+        }
+        biggus.sort(c);
+        return biggus;
+
+    }
+
+    private void greaterThan(TreeNode<E> node, E e, ArrayList<E> biggus) {
+        //nodes venstre barn er større end e
+        if (node.left != null && c.compare(node.left.element, e) > 0) {
+            greaterThan(node.left,e,biggus);
+        //nodes højre barn er større end e
+        }
+        if (node.right != null && c.compare(node.right.element, e) > 0) {
+            greaterThan(node.right,e,biggus);
+        }
+        //node element er større end e
+        if (c.compare(node.element, e) > 0) biggus.add(node.element);
+        //else gør du ik' en skid.
+    }
+
+    public ArrayList<E> greaterThanGPT(E e) {
+        ArrayList<E> biggus = new ArrayList<>();
+
+        if (root != null) {
+            greaterThan(root, e, biggus);
+        }
+
+        biggus.sort(c);
+        return biggus;
+    }
+
+    private void greaterThanGPT(TreeNode<E> node, E e, ArrayList<E> biggus) {
+        if (node != null) {
+            greaterThan(node.left, e, biggus);
+
+            // Check if the current node's element is greater than or equal to e
+            if (c.compare(node.element, e) >= 0) {
+                biggus.add(node.element);
+            }
+
+            greaterThan(node.right, e, biggus);
+        }
     }
 
 }
