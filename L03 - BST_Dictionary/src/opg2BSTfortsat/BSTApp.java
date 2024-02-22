@@ -1,4 +1,4 @@
-import java.util.Arrays;
+package opg2BSTfortsat;
 
 public class BSTApp {
 
@@ -50,14 +50,18 @@ public class BSTApp {
             System.out.println("   Min is: " + biTree.findMin());
         }
 
-        BST bullshit = new BST<>(new Character[]{'+','*','/', '3','8','-','3','6','9'});
-        System.out.println("BRUH");
-        System.out.println();
-        bullshit.preorder();
-        System.out.println();
-        bullshit.postorder();
-        System.out.println();
-        bullshit.inorder();
+        /*
+        Opgave 2
+            Tilføj nedenstående metoder i det udleverede binære søgetræ(fra sidste gang). Dvs
+            implementer metoderne
+            • removeMin – metoden skal fjerne og returnere det mindste element i søgetræet.
+            Metoden må ikke gå igennem træet flere gange, og må derfor ikke kalde den
+            eksisterende delete metode.
+            • removeMax – som removeMin, men her skal fjernes det største element
+            • greaterThan(E element): ArrayList<E> – metoden skal returnere alle de
+            elementer i træet der er større end element.
+         */
+
     }
 
 }
