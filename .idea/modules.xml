@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/L01 - Tidskompleksistet/L01 - Tidskompleksistet.iml" filepath="$PROJECT_DIR$/L01 - Tidskompleksistet/L01 - Tidskompleksistet.iml" />
       <module fileurl="file://$PROJECT_DIR$/L03 - BST_Dictionary/L03 - BST_Dictionary.iml" filepath="$PROJECT_DIR$/L03 - BST_Dictionary/L03 - BST_Dictionary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/L04 - Hashing/L04 - Hashing.iml" filepath="$PROJECT_DIR$/L04 - Hashing/L04 - Hashing.iml" />
       <module fileurl="file://$PROJECT_DIR$/PRO3.iml" filepath="$PROJECT_DIR$/PRO3.iml" />
     </modules>
   </component>
