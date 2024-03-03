@@ -381,6 +381,7 @@ public class BST<E> implements Tree<E> {
             E toReturn = node.element;
             parent.left = null;
             node = null;
+            size--;
             return toReturn;
         }
 
@@ -389,6 +390,7 @@ public class BST<E> implements Tree<E> {
             E toReturn = node.element;
             parent.left = node.right;
             node = null;
+            size--;
             return toReturn;
         }
     }
