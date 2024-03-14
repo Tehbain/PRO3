@@ -1,5 +1,8 @@
 package myset;
 
+import java.util.LinkedList;
+import java.util.function.Function;
+
 public class MyHashSetChaining<E> implements MySet<E> {
     // The number of elements in the set
     private int size = 0;
@@ -14,15 +17,45 @@ public class MyHashSetChaining<E> implements MySet<E> {
 
     /** Hash function */
     private int hash(int hashCode) {
+        double loadFactorThreshold = 0.75;
+        double capacityCap = (size+1) * 0.75;
+        if (size >= capacityCap * loadFactorThreshold) {
+            //reHash();
+        }
         if (hashCode < 0) {
             hashCode = -hashCode;
         }
-        return hashCode % table.length;
+        return hashCode % (table.length);
+    }
+
+    private void reHash() {
+        int newBucketsLength = size / 2;
+        if (newBucketsLength < 5) newBucketsLength += 10;
+        Node[] newTable = new Node[newBucketsLength]; //bruh
+
+        //saving entries in new map with even bigger buckets!
+        for (Node<E> node : table) {
+            int i = 0;
+
+            while (node != null && node.next != null) {
+                newTable[i] = node;
+                node = node.next;
+                i++;
+            }
+        }
+        size = 0;
+        this.table = newTable;
     }
 
     @Override /** Remove all elements from this set */
     public void clear() {
-        // TODO
+        size = 0;
+        for (int i = 0; i < table.length - 1; i++) {
+            if (table[i] != null) {
+                table[i].next = null;
+                table[i] = null;
+            }
+        }
     }
 
     @Override /** Return true if the element is in the set */
@@ -68,11 +101,26 @@ public class MyHashSetChaining<E> implements MySet<E> {
 
     @Override /** Remove the element from the set */
     public boolean remove(E e) {
+        boolean found = contains(e);
+        if (found == false) return found = false;
 
-        boolean found = false;
+        int bucketIndex = hash(e.hashCode());
 
-
-        return false;
+        Node<E> current = table[bucketIndex];
+        Node<E> prev = current;
+        while (current != null) {
+            if (current.data.equals(e)) {
+                prev.next = current.next;
+                current = null;
+                table[bucketIndex] = prev;
+                size--;
+                return found;
+            } else {
+                prev = current;
+                current = current.next;
+            }
+        }
+        return found = false;
     }
 
     @Override /** Return true if the set contains no elements */

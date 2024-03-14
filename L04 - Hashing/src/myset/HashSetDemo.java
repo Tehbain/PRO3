@@ -27,14 +27,14 @@ public class HashSetDemo {
 		System.out.println("Size is: " + names.size());
 		System.out.println("Name: " + containsTest + " is in Set?: " + names.contains(containsTest));
 
-		// names.remove("Romeo");
-		// System.out.println(names.contains("Romeo"));
-		// System.out.println(names.contains("George"));
-		// names.remove("George");
-		// System.out.println(names.size());
-		// System.out.println();
-		// names.writeOut();
-		// System.out.println();
+		 names.remove("Romeo");
+		 System.out.println(names.contains("Romeo"));
+		 System.out.println(names.contains("George"));
+		 names.remove("George");
+		 System.out.println(names.size());
+		 System.out.println();
+		 names.writeOut();
+		 System.out.println();
 
 	}
 }
