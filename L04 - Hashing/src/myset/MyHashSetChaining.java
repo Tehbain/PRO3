@@ -29,22 +29,19 @@ public class MyHashSetChaining<E> implements MySet<E> {
     }
 
     private void reHash() {
-        int newBucketsLength = size / 2;
-        if (newBucketsLength < 5) newBucketsLength += 10;
-        Node[] newTable = new Node[newBucketsLength]; //bruh
+        int newCapacity = table.length * 2 + 1;
+        Node<E>[] oldBoy = table;
+        size = 0;
+        table = (Node<E>[]) new Node[newCapacity];
 
-        //saving entries in new map with even bigger buckets!
-        for (Node<E> node : table) {
-            int i = 0;
-
+        for (Node<E> node : oldBoy) {
             while (node != null && node.next != null) {
-                newTable[i] = node;
+                table[size] = node;
                 node = node.next;
-                i++;
+                size++;
             }
         }
         size = 0;
-        this.table = newTable;
     }
 
     @Override /** Remove all elements from this set */
@@ -105,18 +102,22 @@ public class MyHashSetChaining<E> implements MySet<E> {
         if (found == false) return found = false;
 
         int bucketIndex = hash(e.hashCode());
-
         Node<E> current = table[bucketIndex];
-        Node<E> prev = current;
+
+        if (current.data.equals(e)) {
+            table[bucketIndex] = current.next;
+            current = null;
+            size--;
+        }
+
         while (current != null) {
             if (current.data.equals(e)) {
-                prev.next = current.next;
+                table[bucketIndex] = current.next;
+                current.next = current.next.next;
                 current = null;
-                table[bucketIndex] = prev;
                 size--;
                 return found;
             } else {
-                prev = current;
                 current = current.next;
             }
         }
