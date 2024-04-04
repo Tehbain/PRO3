@@ -14,5 +14,15 @@ public class DDHTest {
 
         System.out.println("\nwriteOut()");
         ddh.writeOut();
+        System.out.println();
+
+        System.out.println("Get Hunulven");
+        System.out.println(ddh.get("Hunulven"));
+        System.out.println();
+
+        System.out.println("Remove Hunulven");
+        System.out.println("Pisk?: " + ddh.remove("Hunulven").equals("Pisk"));
+        System.out.println("Post remove writeout()");
+        ddh.writeOut();
     }
 }
