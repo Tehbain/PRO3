@@ -21,7 +21,7 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
     private Entry<K,V>[] table;
     private int size;
     private final Entry DELETED = new Entry(null,null);
-    private float DEFAULT_LOAD_CAPACITY = 0.50f;
+    private final float DEFAULT_LOAD_CAPACITY = 0.50f;
     private int capacity;
 
     public DictionaryDoubleHashing(int length) {
@@ -83,7 +83,9 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
     @Override
     public V get(K key) {
         int keyHash = hash(key.hashCode());
-        return table[keyHash].value;
+
+        if (table[keyHash] == null) return null;
+        else return table[keyHash].value;
     }
 
     @Override
@@ -94,7 +96,9 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
     @Override
     public V put(K key, V value) {
 
-        if (this.get(key) != null) {
+        if (key == null || value == null) return null;
+
+        if (this.get(key) != null || this.get(key) != DELETED) {
             int hash = hash(key.hashCode());
             table[hash] = new Entry<>(key, value);
             return value;
@@ -116,9 +120,18 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
     public V remove(K key) {
 
         int keyHash = hash(key.hashCode());
-        V value = table[keyHash].getValue();
-        table[keyHash] = DELETED;
+        V value = null;
 
+        if (table[keyHash] == null) value = null;
+        else if (table[keyHash] == DELETED) {
+            int offsetKeyHash = offset(hash(key.hashCode()));
+            value = table[offsetKeyHash].value;
+            table[offsetKeyHash] = DELETED;
+        }
+        else {
+            value = table[keyHash].getValue();
+            table[keyHash] = DELETED;
+        }
         return value;
     }
 
