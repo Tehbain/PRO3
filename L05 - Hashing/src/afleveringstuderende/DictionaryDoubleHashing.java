@@ -56,8 +56,10 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
         if (table[hash] == null) {
             return hash;
         }
+        int inc = 0;
         while (table[hash] == DELETED) {
-             hash = offset(hashCode);
+             hash = offset(hashCode + inc);
+             ++inc;
         }
         return hash;
     }
@@ -67,7 +69,7 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
     }
 
     private void rehash() {
-        int newCapacity = trim(table.length * 2 - 1); //TODO
+        int newCapacity = trim(table.length * 2 - 1);
         this.capacity = newCapacity;
 
         DictionaryDoubleHashing<K,V> prev = this;
@@ -98,21 +100,16 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
 
         if (key == null || value == null) return null;
 
-        if (this.get(key) != null || this.get(key) != DELETED) {
-            int hash = hash(key.hashCode());
-            table[hash] = new Entry<>(key, value);
-            return value;
-        }
-
         if (size >= capacity * DEFAULT_LOAD_CAPACITY) {
             rehash();
         }
 
-        int index = hash(key.hashCode());
-        Entry<K,V> newEntry = new Entry<K, V>(key, value);
-        table[index] = newEntry;
-        size++;
-
+        int spot = hash(key.hashCode());
+        Entry<K,V> spotCheck = table[spot];
+        if (spotCheck != null || spotCheck != DELETED) {
+            table[spot] = new Entry<>(key, value);
+            size++;
+        }
         return value;
     }
 

@@ -21,8 +21,9 @@ public class DDHTest {
         System.out.println();
 
         System.out.println("Remove Hunulven");
-        System.out.println("Pisk?: " + ddh.remove("Hunulven").equals("Pisk"));
-        System.out.println("Post remove writeout()");
+        System.out.println("\tHar Hunulven forresten en Pisk?: " + ddh.remove("Hunulven").equals("Pisk"));
+        System.out.println("Post remove() writeout()");
         ddh.writeOut();
+        System.out.println();
     }
 }
