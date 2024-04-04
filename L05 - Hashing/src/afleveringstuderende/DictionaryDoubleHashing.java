@@ -24,13 +24,13 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
     private final float DEFAULT_LOAD_CAPACITY = 0.50f;
     private int capacity;
 
-    public DictionaryDoubleHashing(int length) {
+    public DictionaryDoubleHashing(int length) { // O(1)
         table =  new Entry[length];
         size = 0;
         capacity = trim(4);
     }
 
-    private int trim(int initilalCapacity) {
+    private int trim(int initilalCapacity) { // O(n)
         int capacity = 1;
         while (capacity < initilalCapacity) {
             capacity <<= 1;
@@ -38,14 +38,14 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
         return capacity;
     }
 
-    public void clear() {
+    public void clear() { // O(n)
         size = 0;
         for (Entry entry : this.table) {
             entry = null;
         }
     }
 
-    private int hash(int hashCode) {
+    private int hash(int hashCode) { // O(n)
         double currLoadFactor = size * DEFAULT_LOAD_CAPACITY;
         int hash = hashCode % table.length;
 
@@ -68,7 +68,7 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
         return 7 - (hash % 7);
     }
 
-    private void rehash() {
+    private void rehash() { // O(n+k)
         int newCapacity = trim(table.length * 2 - 1);
         this.capacity = newCapacity;
 
@@ -83,7 +83,7 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
     }
 
     @Override
-    public V get(K key) {
+    public V get(K key) { // O(n)
         int keyHash = hash(key.hashCode());
 
         if (table[keyHash] == null) return null;
@@ -93,10 +93,10 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
     @Override
     public boolean isEmpty() {
         return size == 0;
-    }
+    } // O(1)
 
     @Override
-    public V put(K key, V value) {
+    public V put(K key, V value) { // O(n)
 
         if (key == null || value == null) return null;
 
@@ -114,7 +114,7 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
     }
 
     @Override
-    public V remove(K key) {
+    public V remove(K key) { //O(n)
 
         int keyHash = hash(key.hashCode());
         V value = null;
@@ -133,7 +133,7 @@ public class DictionaryDoubleHashing <K, V> implements Dictionary<K, V> {
     }
 
     @Override
-    public int size() {
+    public int size() { // O(1)
         return size;
     }
 
