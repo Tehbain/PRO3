@@ -1,0 +1,28 @@
+Opgaver fredag den 19. april
+Opgave 1
+I klassen Exercise1 finder i en liste med tal. Du skal under anvendelse af Streams tilføje kode der:
+1) Udskriver det største element i listen
+2) Afgør og udskriver om alle tallene i listen er mindre end 50
+3) Udskriver antallet af lige tal i listen
+4) Udskriver antallet af ulige tal i listen
+5) Udskriver
+a. Gennemsnittet af tallene i listen
+b. Antallet af tallene i listen
+c. Antallet af tallene i listen der er større end gennemsnittet
+d. Antallet af tallene i listen der er mindre end gennemsnittet
+6) Udskriver antallet af gange de forskellige tal forekommer i listen
+7) Udskriver antallet af gange de forskellige tal forekommer i listen i
+sorteret orden
+
+Opgave 2
+I den udleverede kode finder er der en stor tekst fil (movies.txt). med en række film oplysninger. En
+klasse Movie der modellerer en film samt en MoviesApp der indlæser filmene fra tekstfilen til en liste.
+Læs den udleverede kode.
+Tilføj til main() metoden kode der under anvendelse af Streams gør følgende:
+1) The number of movies starting with "H"
+2) The title of the movies starting with "X"
+3) The number of films where the director is also an actor
+4) The number of actors in the film with the most actors
+5) The title of the film with the most actors
+6) Number of films divided by first letter in the film title
+7) Number of movies whose title starts with "The "
