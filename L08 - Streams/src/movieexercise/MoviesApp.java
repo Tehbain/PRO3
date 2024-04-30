@@ -36,6 +36,8 @@ public class MoviesApp {
     }
 
     public static void main(String[] args) throws IOException {
+        String BREAK = "\t\t";
+
         List<Movie> movieList = readMovies("movies.txt");
 //        for (Movie m : movieList) {
 //            System.out.println(m.getTitle());
@@ -45,33 +47,74 @@ public class MoviesApp {
         //System.out.println("Number of movies: " + movieList.size());
 
         //  The numer of movies starting with "H"
-        long countH = movieList.stream().filter(movie -> movie.getTitle().startsWith("H")).count();
-        System.out.println(countH);
+        {
+            long countH = movieList.stream()
+                    .filter(movie -> movie.getTitle().startsWith("H"))
+                    .count();
+            System.out.println("The number of movies starting with \"H\": ");
+            System.out.println(BREAK + countH);
+            System.out.println();
+        }
 
         // The title of the movies starting with "X"
-        movieList.stream().filter(movie -> movie.getTitle().startsWith("X")).forEach(movie -> {
-            System.out.print(movie.getTitle() + ", ");
-        });
+        {
+            movieList.stream()
+                    .filter(movie -> movie.getTitle().startsWith("X"))
+                    .forEach(movie -> {
+                System.out.print(movie.getTitle() + ", ");
+            });
+            System.out.println("\n");
+        }
 
         // The number of films where the director is also an actor
-        movieList.stream().collect()
+        {
+            long directorIsActorCount = movieList.stream()
+                    .filter(movie -> (movie.getActors().stream()
+                            .anyMatch(actor -> movie.getDirectors().contains(actor)))).count();
+            System.out.println("The number of films where the director is also an actor: ");
+            System.out.println(BREAK + directorIsActorCount);
+            System.out.println();
+        }
 
         //The number of actors in the film with the most actors
-        // TODO Opgave
+        {
+            long mostActedEUWcount = movieList.stream()
+                    .max((movie1,movie2) -> movie1.getActors().size() - movie2.getActors().size())
+                    .get().getActors().size();
+            System.out.println("The number of actors in the film with the most actors: ");
+            System.out.println(BREAK + mostActedEUWcount);
+            System.out.println();
+        }
 
         // The title of the film with the most actors
-        // TODO Opgave
+        {
+            Movie mostActedEUWname = movieList.stream()
+                    .max((movie1, movie2) -> movie1.getActors().size() - movie2.getActors().size())
+                    .get();
+            System.out.println("The title of the film with the most actors:");
+            System.out.println(BREAK + mostActedEUWname.getTitle() + " (" + mostActedEUWname.getActors().size() + ")");
+            System.out.println();
+        }
 
         //Number of films divided by first letter in the film title
-        // TODO Opgave
+        {
+            System.out.println("Number of films divided by first letter in the film title:");
+            movieList.stream()
+                    .collect(Collectors.groupingBy(e -> e.getTitle().charAt(0), TreeMap::new, Collectors.counting()))
+                    .forEach((k,v) -> {
+                        System.out.println(k + ": " + v);
+                    });
+
+        }
 
         // Number of movies whose title starts with "The "
-        // TODO Opgave
-
-
-//
+        {
+            long theCount = movieList.stream().filter(movie -> movie.getTitle().startsWith("The ")).count();
+            System.out.println();
+            System.out.println("Number of movies whose title starts with \"The \":");
+            System.out.println(BREAK + theCount);
+            System.out.println();
+        }
     }
-
-
 }
 
