@@ -1,0 +1,18 @@
+Opgave 2
+Skriv en klasse Counter med et Singleton pattern. Klassen skal have en instansvariabel value,
+som initialiseres til 0. Klassen skal desuden have fire metoder:
+• count() som tæller value op med 1
+• times2() som fordobler value
+• zero() som nulstiller value
+• getValue() som returnerer værdien af value
+Skriv en anden klasse AnvendCounter som anvender Counter.
+
+Opgave 3
+Lav en PersonAdministrator klasse, der har et Set af personer (fra en Person klasse du selv
+finder på) samt metoderne:
+• add(Person person)
+• getPersoner()
+• remove(Person person).
+Gør dernæst klassen PersonAdministrator til en Singleton, så der kun kan være et objekt af
+klassen. Skriv en anden klasse AnvendPersonAdministrator som anvender
+PersonAdministrator.
